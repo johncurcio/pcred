@@ -1,0 +1,116 @@
+class UsersController < ApplicationController
+  def create
+    user = User.new(create_params)
+    user[:token] = user.token_gen
+    user[:token_expires] = (Time.now + 24*3600*7).to_time
+    
+    AccessLog.attempt(user, "user", "create", user)
+    if user.valid? && user.save
+      AccessLog.success(user, "user", "create", user)
+      render json: {user: user.with_token,
+                    status: 200
+                    }, status: 200
+    else
+      AccessLog.failure(user, "user", "create", user)
+      render json: {error: "Invalid User Attributes.",
+                    status: 500
+                    }, status: 500
+    end
+  end
+
+  def login
+    log_params = login_params
+    user = User.find_by_email(log_params[:email].downcase)
+    AccessLog.attempt(user, "user", "login", user)
+    if !user.nil? && user.authenticate(log_params[:password])
+      AccessLog.success(user, "user", "login", user)
+      user.token_check
+      render json: {token: user.token,
+                    status: 200
+                    }, status: 200
+    else
+      AccessLog.failure(user, "user", "login", user)
+      render json: {error: "Invalid Email Or Password",
+                    status: 404
+                    }, status: 404
+    end
+  end
+
+  def destroy
+    log_params = login_params
+    user = User.find_by_email(log_params[:email])
+    AccessLog.attempt(user, "user", "destroy", user)
+    AccessLog.failure(user, "user", "destroy", user)
+    render json: {error: "Cannot Destroy User",
+                  status: 404
+                  }, status: 404
+  end
+
+  def update
+    up_params = update_params
+    user = User.find_by_token(up_params[:token])
+    AccessLog.attempt(user, "user", "update", user)
+    unless user.nil?
+      if params[:password]
+        if user.authenticate(up_params[:old_password])
+          if user.update(first_name: up_params[:first_name] || user.first_name,
+                          last_name: up_params[:last_name] || user.last_name,
+                          email: user.email,
+                          phone_number: user.phone_number,
+                          password: up_params[:password],
+                          password_confirmation: up_params[:password_confirmation])
+
+            user.password_swap(up_params[:old_password], up_params[:password])
+            up_success(user)
+          else
+            up_failure(user, "Unable to update user.")
+          end
+        else
+          up_failure(user, "Invalid Old Password")
+        end
+      else
+        user.update(first_name: up_params[:first_name] || user.first_name,
+                    last_name: up_params[:last_name] || user.last_name,
+                    email: user.email,
+                    phone_number: user.phone_number)
+        up_success(user)
+      end
+    else
+      up_failure(user, "Invalid Token. No Such User")
+    end
+  end
+
+
+  def up_success(user)
+    AccessLog.success(user, "user", "update", user)
+    render json: {message: "User successfully updated.",
+                  status: 200
+                  }, status: 200
+  end
+
+
+  def up_failure(user, error)
+    AccessLog.failure(user, "user", "update", user)
+    render json: {error: error,
+                status: 404
+                }, status: 404
+  end
+
+  private
+
+  def create_params
+    params.permit(:first_name, :last_name, :email, :phone_number, :password, :password_confirmation)
+  end
+
+  def login_params
+    params.permit(:email, :password)
+  end
+
+  def update_params
+    params.permit(:token, :first_name, :last_name, :password, :password_confirmation, :old_password)
+  end
+
+  def destroy_params
+    params.permit(:email, :password, :password_confirmation)
+  end
+end

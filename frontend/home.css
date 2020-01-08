@@ -1,0 +1,116 @@
+#strip
+{
+  width: 100%;
+  position: fixed;
+  left: 0px;
+  background: white;
+  box-shadow: 0px 3px 15px rgba(19,35,47,0.3);
+}
+
+.logoimg{
+  margin-top: 4px;
+  margin-left: 10px;
+}
+
+#maincontain {
+  height: 75%;
+  width: 100%;
+  position: absolute;
+  top: 100px;
+  left: 0px;
+  display: table;
+  table-layout: fixed;
+  border-spacing: 20px;
+  z-index: -1;
+}
+
+#passlist {
+  margin: 10px;
+  height:85%;
+  padding-left: 0px;
+  background-color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.passitem {
+  width:100%;
+  text-align: left;
+  background-color: transparent;
+  font-size:1.25em;
+  color: #a06021;
+}
+
+.passitem:hover {
+  background-color: #fff8eb;
+}
+
+.Row {
+  box-shadow: 0px 3px 15px rgba(19,35,47,0.3);
+  display: table-cell;
+  background: white;
+  color: #BF5555;
+  padding: 15px;
+}
+
+input, button, a {
+  color: black;
+}
+
+.stripbutton {
+  float: right;
+  height: 75px;
+  background: transparent;
+  font-size: 1.2em;
+  color: #BF5555;
+  padding-right: 7px;
+  padding-left: 7px;
+  border-bottom: thick solid transparent;
+  border-top: thick solid transparent;
+}
+
+.fa{
+  margin: 5px;
+  font-size: 15pt;
+}
+
+.fa-sign-out{
+  color: black;
+}
+
+
+.fa-user-secret:hover, .fa-sign-out:hover, .stripbutton:hover{
+  color: #BF5555;
+}
+
+.stripbutton:hover {
+  color: #BF5555;
+  border-bottom: thick solid black;
+}
+
+h3 {
+  margin: 0px;
+  font-weight: bold;
+}
+
+hr {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.action {
+  width:30%;
+  margin: 3px;
+}
+
+#actionBay {
+  margin: 10px;
+  margin-top: 20px;
+  height: 60%;
+  background: transparent;
+}
+
+.usersetting:link, .usersetting:visited, .usersetting:hover, .usersetting:active {
+  text-decoration: none;
+  color: white;
+}

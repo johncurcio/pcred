@@ -1,0 +1,12 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: Dave
+  last_name: Johnson
+  email: irrelevant@gmail.com
+  phone_number: 1234567890
+  password_digest: ajsdhfalskjdfhlakjshdfkljhasdkdljfhkj213741782y341hkjh4321k
+  token: hashfaklhhfal2hl8hl28ad2hd823r7a2d7il237r7237l3223di7i723lh7i2
+  token_expires: 2016-02-16 21:17:45
+  password_cipher: asdfjhgaskdhfajdsgfkjagsdkjgfkasjdshgfkajsg
+  iv: asdfjhgaskdhfajdsgfkjajsg

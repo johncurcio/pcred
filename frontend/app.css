@@ -1,0 +1,72 @@
+﻿*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+#banner {
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+body {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#faa21b+0,f09021+100 */
+  background: white;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #CA4527;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+
+a:hover,
+a:active {
+  color: #E86624;
+}
+
+h1 {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 300;
+  margin: 0 0 40px;
+}
+
+button{
+  border: none;
+}
+
+.fix-spacing{
+  margin: 70px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+
+#logoutbtn {
+  float:left;
+}
+
+#entryinfo {
+  border-radius: 1.5em;
+  //background-color:#ffe3b1;
+}
+
+#gocats {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.nAlert {
+  color: red;
+}

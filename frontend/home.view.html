@@ -1,0 +1,253 @@
+<link href="css/home.css" rel="stylesheet" />
+<div id="strip">
+  <a href="#/"><img class = "logoimg" src="img/minilogo.png"></a>
+
+  <button ng-click="vm.logout()" class="stripbutton"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+
+  <button class="stripbutton" ng-click="vm.toggleUserSett()">
+    {{vm.email}}
+    <i class="fa fa-user-secret" aria-hidden="true"></i>
+  </button>
+</div>
+
+<div id='maincontain'>
+  <div class='Row' id='box1'>
+    <h3><img class = "vault" src="img/vault.png" alt = "Your Vault"></h3>
+    <hr>
+    <ul id='passlist'>
+      <li ng-repeat="website in vm.all_websites">
+        <button class='passitem' ng-click="vm.selected = website"> 
+          {{website}} 
+        </button>
+
+      </li>
+    </ul>
+
+      </div>
+
+  <div class='Row' id='box2'>
+    <h3><img class = "" src="img/dashboard.png" alt = "Entry Dashboard"></h3>
+
+    <hr>
+
+    <h4>Selected: {{vm.selected}}</h4>
+
+    <div id='entryinfo'>
+      <p>Encrypted Password: {{vm.requested_password_disp}} </p>
+      <p>Decrypted Password: {{vm.decrypted_password}} </p>
+    </div>
+
+    <button type="submit" class="button button-block" ng-click="vm.clearDashboard()">Clear</button> 
+  </div>
+
+  <!-- Third Box: Action Panel -->
+  <div class='Row' id='actionPanel'>
+
+    <h3><img class = "action" src="img/action.png" alt = "Action Panel"></h3>
+
+    <hr>
+
+    <h4>Password Operations<h4>
+
+    <!--Delete Button-->
+    <button class="button action" ng-click="vm.toggleDeletePass()" ng-disabled="vm.selected == ''">
+      Delete
+    </button>
+
+    <!--Edit password form-->
+    <button class="button action" ng-click="vm.toggleEditPass()" ng-disabled="vm.selected == ''">
+      Edit
+    </button>
+
+    <!--Retrieve password-->
+    <button class="button action"  ng-click="vm.toggleRetrievePass()" ng-disabled="vm.selected == ''">
+      Reveal
+    </button>
+
+    <h4>Account Operations</h4>
+
+    <!--Create a new password-->
+    <button type="submit" class="button button-action" ng-click="vm.toggleCreatePass()">Add Pass</button>
+
+    <button type="submit" class="button button-action" ng-click="vm.toggleUserSett()">Profile</button>
+    <!--
+       Action Bay, forms appear here 
+    -->
+    <div id='actionBay'>
+
+      <!-- Create Password Form -->
+      <div ng-show="vm.cpView">
+        <p class="nAlert"> {{vm.password_alert}} </p>
+        <form name="create_form" ng-submit="vm.createPassword()" role="form">
+          <h4> Create Password </h4>
+          <div>
+            <label>Website</label>
+            <input type="text" id="create_website" ng-model="vm.create_website" required />
+          </div>
+
+          <div>
+            <label>Password</label>
+            <input type="password" id="create_password" ng-model="vm.create_password" required />
+          </div>
+          
+          <div>
+            <label> Master Password </label>
+            <input type="password" id="master_password" ng-model="vm.master_pass" required />
+          </div>
+
+          <div>
+            <button class="btn" type="submit" ng-disabled="form.$invalid || vm.dataLoading">
+              Create
+            </button>
+          </div>
+          
+          <h4>Need help making a secure password?</h4>
+
+          <button type="button" class="btn btn-warning btn-block" ng-click="vm.showDiceware()"> Random Passphrase</button>
+          <button type="button" class="btn btn-warning btn-block" ng-click="vm.showRandomGen()"> Random Password</button>
+
+          <div ng-show = "vm.diceView">
+            <p><b>Diceware</b>: {{vm.dicewared}}</p>
+
+            <div class="btn-group" role="group" aria-label="Add random words group">
+              <button type="button" ng-click="vm.diceware(4)" class="btn btn-warning genWordsButton">
+                <span class="glyphicon glyphicon-random" aria-hidden="true"></span> 4 Words
+              </button>
+              <button type="button" ng-click="vm.diceware(5)" class="btn btn-warning genWordsButton">
+                <span class="glyphicon glyphicon-random" aria-hidden="true"></span> 5 Words
+              </button>
+              <button type="button" ng-click="vm.diceware(6)" class="btn btn-warning genWordsButton">
+                <span class="glyphicon glyphicon-random" aria-hidden="true"></span> 6 Words
+              </button>
+              <button type="button" ng-click="vm.plusWord()"  class="btn btn-default genWordsButton">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Word
+              </button>
+
+              <button class='btn' type="button" ng-click="vm.create_password=vm.dicewared">
+                Use It!
+              </button>
+            </div>  
+          </div>
+          
+          <div ng-show = "vm.rangenView">
+            <div>
+              <b>Random:</b> {{vm.generated}}
+            </div>
+
+            <div>
+              <label>Length</label>
+              <input type='number' ng-model='randomLen' min="5" max="20" value="10">
+              <button class='btn' type='button' ng-click="vm.generatePassword(randomLen)"> Generate</button>
+              <button class='btn' type='button' ng-click="vm.create_password=vm.generated">Use it!</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- User Settings Form -->
+      <div ng-show="vm.usView">
+        <h4>User Settings</h4>
+        <p class="nAlert"> {{vm.password_alert}} </p>
+        <form name="request_form" role="form">
+
+          Click on a field to edit it. You cannot edit your email address.
+          <br>
+          <div>
+            <label>Name: 
+              <a class="usersetting" ng-hide="vm.setting_selected=='name'" ng-click='vm.setting_selected="name"'>
+                {{vm.first_name}} {{vm.last_name}}
+              </a>
+            </label>
+            <input ng-show='vm.setting_selected=="name"' ng-model="vm.new_first_name" placeholder="{{vm.first_name}}"/>
+            <input ng-show='vm.setting_selected=="name"' ng-model="vm.new_last_name" placeholder="{{vm.last_name}}"/>
+          </div>
+
+          <div>
+            <label>Email: {{vm.email}}</label>
+          </div>
+
+          <div>
+            <label><b ng-show="vm.setting_selected=='master'">Current </b><b>Master Password</b>:
+              <a class="usersetting" ng-hide="vm.setting_selected=='master'" ng-click='vm.setting_selected="master"'>
+                *************
+              </a>
+            </label>
+            <input ng-show="vm.setting_selected=='master'" ng-model="vm.current_master_password" type="password" id="master_password"/>
+          </div>
+          <div ng-show="vm.setting_selected=='master'">
+            <label>New Master Password</label>
+            <input ng-model="vm.new_master_password" type="password"/>
+          </div>
+
+          <div ng-show="vm.setting_selected=='master'">
+            <label>Confirm New Master Password</label>
+            <input ng-model="vm.new_master_password_confirm" type="password"/>
+          </div>
+
+          <div>
+            <button class="btn" ng-click="vm.updateUser(vm.setting_selected)" ng-disabled="form.$invalid">
+              Update 
+            </button>
+            <button class="btn" ng-show="vm.setting_selected!=null && vm.setting_selected!=''" ng-click="vm.setting_selected=''">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Retrieve Password Form -->
+      <div ng-show="vm.rpView">
+        <h4>Retrieve Password</h4>
+        <p class="nAlert"> {{vm.password_alert}} </p>
+        <form name="request_form" role="form">
+          <div>
+            <!-- <label> Master Password </label> -->
+           <!-- <input type="password" id="master_password" ng-model="vm.master_password" required /> -->
+            <button class="btn" ng-click="vm.getPassword(vm.selected)" ng-disabled="form.$invalid || vm.selected == ''">
+              Request
+            </button>
+          </div>
+        </form>
+        <form name="decrypt_form" ng-submit="vm.decryptPassword()" role="form">
+          <div>
+            <label>Decrypt Key:</label>
+            <input type="text" id="deckey" ng-model="vm.deckey" required />
+            <button class='btn' type="submit" ng-disabled="form.$invalid || vm.dataLoading || (vm.selected == '')">
+              Decrypt
+            </button>
+          </div>
+        </form>
+
+      </div>
+
+      <!-- Edit Password Form -->
+      <div ng-show="vm.epView">
+        <h4>Edit Password</h4>
+        <p class="nAlert"> {{vm.password_alert}} </p>
+        <form name="request_form" role="form">
+          <div>
+            <label>New Password</label>
+            <input type="password" id="new_password" ng-model="vm.new_password" required />
+          </div>
+
+          <div>
+            <label> Master Password </label>
+            <input type="password" id="master_password" ng-model="vm.master_password" required />
+          </div>
+          <button class="btn" ng-click="vm.editPassword()" ng-disabled="form.$invalid || vm.selected == ''">
+            Update
+          </button>
+        </form>
+      </div>
+
+      <!-- Delete Password Form -->
+      <div ng-show="vm.dpView">
+        <h4>Delete Password</h4>
+        <p class="nAlert">Are you sure you want to delete this password?
+        You will not be able to recover the password afterward.</p>
+        <button class="btn" ng-click="vm.deletePassword(); op=''">Yes, I don't need you to tell me what to do.</button>
+      </div>
+    </div>
+  </div>
+</div>
+

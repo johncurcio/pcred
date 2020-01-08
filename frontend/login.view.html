@@ -1,0 +1,43 @@
+﻿
+<img id="banner" src="img/logo.png">
+
+<div class="col-md-6 col-md-offset-3">
+    <form class = "form" name="form" ng-submit="vm.login()" role="form">
+        <ul class="tab-group">
+            <li class="tab active"><a href="#">Log In</a></li>
+            <li class="tab"><a href="#/register">Sign Up</a></li> 
+        </ul>
+        <div ng-class="{ 'alert-error': flash, 'alert-scc': flash.type === 'success', 'alert-fail': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+        <!-- this structure is required for styling -->
+        <div class="form-group field-wrap">
+            <label ng-class="{active: vm.email || form.email.$error.pattern, highlight: vm.email || form.email.$error.pattern}" for="email">
+                  Email Address<span class="req">*</span>
+            </label>
+            <input type="text" name = "email" id="email" ng-model="vm.email" required autocomplete="off"/>
+            <div class = "alert-error" role="alert">
+                <span class="error" ng-show="form.email.$error.pattern && form.email.$touched">
+                        Bad email format.</span>
+            </div>
+        </div>
+        <!-- END OF STRUCTURE REQUIRED FOR STYLING OF INPUTS -->
+        <!-- this structure is required for styling -->
+        <div class="form-group field-wrap">
+            <label ng-class="{active: vm.password || form.password.$error.pattern, highlight: vm.password || form.password.$error.pattern}" for="password">
+                  Password<span class="req">*</span>
+            </label>
+            <input type="password" name="password" id="password" ng-model="vm.password" required autocomplete="off"/>
+            <div class = "alert-error" role="alert" ng-show="form.$error">
+                <span class="error" ng-show="form.password.$error.pattern && form.password.$touched">
+                            Weak password.</span>
+            </div>
+        </div>
+        <!-- END OF STRUCTURE REQUIRED FOR STYLING OF INPUTS -->
+        <div class="form-actions">
+            <p class="forgot"><a href="#/recover">Forgot Password?</a></p>
+            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="button button-block">Log In</button>
+            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+    </form>
+
+    <img id="gocats" ng-src="http://i.imgur.com/vkW3Lhe.jpg" ng-show="goCats || vm.email == 'cat'">
+</div>

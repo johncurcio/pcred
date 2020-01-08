@@ -1,0 +1,69 @@
+<img id="banner" src="img/logo.png">
+
+<div class="col-md-6 col-md-offset-3">
+    <form class = "form" name="form" ng-submit="vm.register()" role="form" ng-controller="RecoverController">
+        <ul class="tab-group">
+            <li class="tab"><a href="#/login">Back</a></li>
+        </ul>
+         <div class="form-group field-wrap">
+            <label ng-class="{active: vm.user.email || form.email.$error.pattern, highlight: vm.user.email || form.email.$error.pattern}" for="email">
+                  Email<span class="req">*</span>
+            </label>
+            <input type="text" name="email" id="email" ng-model="vm.user.email" required autocomplete="off" ng-pattern="email_regex"/>
+            <div class = "alert-error" role="alert">
+                <span class="error" ng-show="form.email.$error.pattern">
+                        Bad email format.</span>
+            </div>
+        </div>
+
+        <div class="form-group field-wrap">
+                <label ng-class="{active: vm.user.sq1 || form.sq1.$error.minlength || form.sq1.$error.maxlength, highlight: vm.user.sq1 || form.sq1.$error.minlength || form.sq1.$error.maxlength}" for="sq1">
+                    Security Question 1: {{vm.sq1}} <span class="req">*</span>
+                </label>
+                <input type="text" name="sq1" id="sq1" ng-model="vm.user.sq1" required autocomplete="off" ng-minlength="2" ng-maxlength="30"/>
+                <div class = "alert-error" role="alert">
+                    <span class="error" ng-show="form.sq1.$error.minlength">
+                        Answer too short!</span>
+                    <span class="error" ng-show="form.sq1.$error.maxlength">
+                        Answer too long!</span>
+                </div>
+        </div>
+        <div class="form-group field-wrap">
+                <label ng-class="{active: vm.user.sq2 || form.sq2.$error.minlength || form.sq2.$error.maxlength, highlight: vm.user.sq2 || form.sq2.$error.minlength || form.sq2.$error.maxlength}" for="sq2">
+                    Security Question 2: {{vm.sq2}} <span class="req">*</span>
+                </label>
+                <input type="text" name="sq2" id="sq2" ng-model="vm.user.sq2" required autocomplete="off" ng-minlength="2" ng-maxlength="30"/>
+                <div class = "alert-error" role="alert">
+                    <span class="error" ng-show="form.sq2.$error.minlength">
+                        Answer too short!</span>
+                    <span class="error" ng-show="form.sq2.$error.maxlength">
+                        Answer too long!</span>
+                </div>
+        </div>
+        <div class="form-group field-wrap">
+                <label ng-class="{active: vm.user.sq3|| form.sq3.$error.minlength || form.sq3.$error.maxlength, highlight: vm.user.sq3 || form.sq3.$error.minlength || form.sq3.$error.maxlength}" for="sq3">
+                    Security Question 3: {{vm.sq3}} <span class="req">*</span>
+                </label>
+                <input type="text" name="sq3" id="sq3" ng-model="vm.user.sq3" required autocomplete="off" ng-minlength="2" ng-maxlength="30"/>
+                <div class = "alert-error" role="alert">
+                    <span class="error" ng-show="form.sq3.$error.minlength">
+                        Answer too short!</span>
+                    <span class="error" ng-show="form.sq3.$error.maxlength">
+                        Answer too long!</span>
+                </div>
+        </div>
+
+        <!-- END OF STRUCTURE REQUIRED FOR STYLING OF INPUTS -->
+            
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="button button-block">Retrieve Password</button>
+            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+        <div class="form-group field-wrap" id="entryinfo">
+            <label> {{vm.password}}</label>
+        <div>
+    </form>
+
+  
+</div>
+
